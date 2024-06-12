@@ -1,24 +1,27 @@
 package com.nelumbo.zoo.persistence.entity;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serializable;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name = "roles")
-public class RoleEntity implements Serializable {
+@Table(name = "areas")
+public class AreaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
+
+    @Column(unique = true, nullable = false)
     private String name;
-    private String description;
+
+    @OneToMany(mappedBy = "area", cascade = CascadeType.REMOVE)
+    List<SpecieEntity> species;
 }
