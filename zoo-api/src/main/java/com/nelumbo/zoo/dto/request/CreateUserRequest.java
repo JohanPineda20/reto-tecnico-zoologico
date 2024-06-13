@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserRequest {
+public class CreateUserRequest {
     @NotBlank(message = "The name cannot be empty")
     private String name;
     private String lastname;
