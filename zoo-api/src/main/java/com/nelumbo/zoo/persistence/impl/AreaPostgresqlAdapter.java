@@ -30,13 +30,17 @@ public class AreaPostgresqlAdapter implements IAreaPersistence {
         return areaRepository.existsByName(name);
     }
     @Override
-    public Optional<AreaModel> findOne(Long id) {
-        return areaRepository.findById(id).map(areaEntityMapper::toAreaModel);
+    public Optional<AreaModel> findOneWithSpecies(Long id) {
+        return areaRepository.getAreaWithSpeciesById(id).map(areaEntityMapper::areaProjectionWithSpeciesToAreaModel);
+    }
+    @Override
+    public Optional<AreaModel> findOneWithSpeciesAndAnimals(Long id) {
+        return areaRepository.getAreaWithSpeciesAndAnimalsById(id).map(areaEntityMapper::areaProjectionWithSpeciesAndAnimalsToAreaModel);
     }
     @Override
     public CustomPage<AreaModel> findAll(Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "name"));
-        return CustomPageConverter.convertPage(areaRepository.findAll(pageable), areaEntityMapper::toAreaModel);
+        return CustomPageConverter.convertPage(areaRepository.findAllBy(pageable), areaEntityMapper::areaProjectionWithSpeciesToAreaModel);
     }
     @Override
     public void delete(AreaModel areaModel) {

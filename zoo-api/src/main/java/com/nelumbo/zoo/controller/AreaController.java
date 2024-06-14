@@ -44,7 +44,7 @@ public class AreaController {
     @PreAuthorize(Constants.ADMIN_OR_EMPLOYEE_ALLOWED)
     @GetMapping("{id}")
     public ResponseEntity<AreaResponse> findOne(@PathVariable Long id) {
-        return ResponseEntity.ok(areaDtoMapper.toAreaResponse(areaService.findOne(id)));
+        return ResponseEntity.ok(areaDtoMapper.toAreaResponse(areaService.findOneWithSpecies(id)));
     }
 
     @PreAuthorize(Constants.ADMIN_ALLOWED)

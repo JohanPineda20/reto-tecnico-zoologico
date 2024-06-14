@@ -36,8 +36,8 @@ public class AreaUseCase implements IAreaService {
     }
 
     @Override
-    public AreaModel findOne(Long id) {
-        return areaPersistence.findOne(id).orElseThrow(() -> new DataNotFoundException(Constants.AREA_NOT_FOUND));
+    public AreaModel findOneWithSpecies(Long id) {
+        return areaPersistence.findOneWithSpecies(id).orElseThrow(() -> new DataNotFoundException(Constants.AREA_NOT_FOUND));
     }
 
     @Override
@@ -47,7 +47,7 @@ public class AreaUseCase implements IAreaService {
 
     @Override
     public AreaModel update(Long id, AreaModel areaModel) {
-        AreaModel areaModel1 = this.findOne(id);
+        AreaModel areaModel1 = this.findOneWithSpecies(id);
         if(areaModel.getName() != null && !areaModel.getName().equals(areaModel1.getName())) {
             validateExistsByName(areaModel.getName());
             areaModel1.setName(areaModel.getName());
@@ -57,7 +57,7 @@ public class AreaUseCase implements IAreaService {
 
     @Override
     public AreaModel delete(Long id) {
-       AreaModel areaModel = findOne(id);
+       AreaModel areaModel = areaPersistence.findOneWithSpeciesAndAnimals(id).orElseThrow(() -> new DataNotFoundException(Constants.AREA_NOT_FOUND));
        for (SpecieModel specieModel: areaModel.getSpecies()) {
             if(specieModel.getAnimals().size() > 0){
                 throw new DomainException(String.format(Constants.CANNOT_DELETE_AREA, areaModel.getName(), specieModel.getName()));

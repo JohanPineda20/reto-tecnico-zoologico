@@ -1,26 +1,26 @@
 package com.nelumbo.zoo.mappers.entity;
 
-import com.nelumbo.zoo.model.AnimalModel;
 import com.nelumbo.zoo.model.AreaModel;
-import com.nelumbo.zoo.model.CommentModel;
-import com.nelumbo.zoo.model.SpecieModel;
-import com.nelumbo.zoo.persistence.entity.AnimalEntity;
 import com.nelumbo.zoo.persistence.entity.AreaEntity;
-import com.nelumbo.zoo.persistence.entity.CommentEntity;
-import com.nelumbo.zoo.persistence.entity.SpecieEntity;
+import com.nelumbo.zoo.persistence.projection.area.AreaProjectionWithSpecies;
+import com.nelumbo.zoo.persistence.projection.area.AreaProjectionWithSpeciesAndAnimals;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring",
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
         unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface AreaEntityMapper {
-    @Mapping(target = "species", qualifiedByName = "specieWithoutArea")
+
+    AreaModel areaProjectionWithSpeciesToAreaModel(AreaProjectionWithSpecies areaProjectionWithSpecies);
+    AreaModel areaProjectionWithSpeciesAndAnimalsToAreaModel(AreaProjectionWithSpeciesAndAnimals areaProjectionWithSpeciesAndAnimals);
+    
     AreaModel toAreaModel(AreaEntity areaEntity);
     AreaEntity toAreaEntity(AreaModel areaModel);
+
+    /*@Mapping(target = "species", qualifiedByName = "specieWithoutArea")
+    AreaModel toAreaModel(AreaEntity areaEntity);
 
     @Named("specieWithoutArea")
     @Mapping(target = "area", ignore = true)
@@ -42,5 +42,5 @@ public interface AreaEntityMapper {
     @Mapping(target = "parentComment", ignore = true)
     @Mapping(target = "replies", ignore = true)
     //@Mapping(target = "animal", ignore = true) //No se coloca porque no es necesario ya que los comentarios hijos (respuestas) tienen animal_id en null y por tanto no entraría en ciclo. Pero se debe descomentar si los comentarios hijos van a tener un animal_id ya que va a llamar a animal y luego animal llamaría a comentarios entrando en ciclo
-    CommentModel toModel(CommentEntity commentEntity);
+    CommentModel toModel(CommentEntity commentEntity);*/
 }

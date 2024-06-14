@@ -7,7 +7,7 @@ public interface IAreaService {
 
     AreaModel create(AreaModel areaModel);
 
-    AreaModel findOne(Long id);
+    AreaModel findOneWithSpecies(Long id);
 
     CustomPage<AreaModel> findAll(Integer page, Integer size);
 
