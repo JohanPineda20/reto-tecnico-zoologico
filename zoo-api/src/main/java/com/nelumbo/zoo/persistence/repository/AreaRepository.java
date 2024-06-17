@@ -2,6 +2,7 @@ package com.nelumbo.zoo.persistence.repository;
 
 import java.util.Optional;
 import com.nelumbo.zoo.persistence.entity.AreaEntity;
+import com.nelumbo.zoo.persistence.projection.area.AreaProjection;
 import com.nelumbo.zoo.persistence.projection.area.AreaProjectionWithSpecies;
 import com.nelumbo.zoo.persistence.projection.area.AreaProjectionWithSpeciesAndAnimals;
 
@@ -14,6 +15,8 @@ public interface AreaRepository extends JpaRepository<AreaEntity, Long> {
     boolean existsByName(String name);
 
     Page<AreaProjectionWithSpecies> findAllBy(Pageable pageable);
+
+    Optional<AreaProjection> getAreaById(Long id);
 
     Optional<AreaProjectionWithSpecies> getAreaWithSpeciesById(Long id);
     

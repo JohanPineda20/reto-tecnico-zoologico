@@ -11,6 +11,8 @@ public interface IAreaPersistence {
 
     boolean existsByName(String name);
 
+    Optional<AreaModel> findOne(Long id);
+
     Optional<AreaModel> findOneWithSpecies(Long id);
 
     Optional<AreaModel> findOneWithSpeciesAndAnimals(Long id);

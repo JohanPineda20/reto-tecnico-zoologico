@@ -20,14 +20,14 @@ public class CommentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 250)
+    @Column(length = 250, nullable = false)
     String body;
 
     @ManyToOne
-    @JoinColumn(name = "author_id")
+    @JoinColumn(name = "author_id", nullable = false)
     UserEntity author;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false, updatable = false)
     LocalDateTime createdAt;
 
     @ManyToOne
@@ -40,4 +40,9 @@ public class CommentEntity {
 
     @OneToMany(mappedBy = "parentComment", cascade = CascadeType.REMOVE)
     List<CommentEntity> replies;
+
+    @PrePersist
+    private void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 }

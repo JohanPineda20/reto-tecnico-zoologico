@@ -4,8 +4,6 @@ import java.util.List;
 
 import com.nelumbo.zoo.persistence.projection.specie.SpecieProjectionWithAnimals;
 
-public interface AreaProjectionWithSpeciesAndAnimals {
-    Long getId();
-    String getName();
+public interface AreaProjectionWithSpeciesAndAnimals extends AreaProjection{
     List<SpecieProjectionWithAnimals> getSpecies();
 }

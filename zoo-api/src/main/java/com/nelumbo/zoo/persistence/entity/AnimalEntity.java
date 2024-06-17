@@ -23,7 +23,7 @@ public class AnimalEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @ManyToOne
@@ -32,4 +32,9 @@ public class AnimalEntity {
 
     @OneToMany(mappedBy = "animal", cascade = CascadeType.REMOVE)
     private List<CommentEntity> comments;
+
+    @PrePersist
+    private void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 }

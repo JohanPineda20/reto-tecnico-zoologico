@@ -97,8 +97,8 @@ public class BeansConfig {
 
     @Bean
     public IUserService userService(IUserPersistence userPersistence,
-                                            IRolePersistence rolePersistence,
-                                            IPasswordEncoder passwordEncoder){
+                                    IRolePersistence rolePersistence,
+                                    IPasswordEncoder passwordEncoder){
         return new UserUseCase(userPersistence, rolePersistence, passwordEncoder);
     }
 
@@ -108,13 +108,15 @@ public class BeansConfig {
     }
 
     @Bean
-    public ISpecieService specieService(ISpeciePersistence speciePersistence){
-        return new SpecieUseCase(speciePersistence);
+    public ISpecieService specieService(ISpeciePersistence speciePersistence,
+                                        IAreaService areaService){
+        return new SpecieUseCase(speciePersistence, areaService);
     }
 
     @Bean
-    public IAnimalService animalService(IAnimalPersistence animalPersistence){
-        return new AnimalUseCase(animalPersistence);
+    public IAnimalService animalService(IAnimalPersistence animalPersistence,
+                                        ISpecieService specieService){
+        return new AnimalUseCase(animalPersistence, specieService);
     }
 
     @Bean

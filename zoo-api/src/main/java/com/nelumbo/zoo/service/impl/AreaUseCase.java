@@ -1,9 +1,5 @@
 package com.nelumbo.zoo.service.impl;
 
-import java.lang.reflect.Field;
-import java.util.Map;
-import java.util.Objects;
-
 import com.nelumbo.zoo.model.AreaModel;
 import com.nelumbo.zoo.model.CustomPage;
 import com.nelumbo.zoo.model.SpecieModel;
@@ -36,6 +32,11 @@ public class AreaUseCase implements IAreaService {
     }
 
     @Override
+    public AreaModel findOne(Long id) {
+        return areaPersistence.findOneWithSpeciesAndAnimals(id).orElseThrow(() -> new DataNotFoundException(Constants.AREA_NOT_FOUND));
+    }
+
+    @Override
     public AreaModel findOneWithSpecies(Long id) {
         return areaPersistence.findOneWithSpecies(id).orElseThrow(() -> new DataNotFoundException(Constants.AREA_NOT_FOUND));
     }
@@ -47,7 +48,7 @@ public class AreaUseCase implements IAreaService {
 
     @Override
     public AreaModel update(Long id, AreaModel areaModel) {
-        AreaModel areaModel1 = this.findOneWithSpecies(id);
+        AreaModel areaModel1 = areaPersistence.findOne(id).orElseThrow(() -> new DataNotFoundException(Constants.AREA_NOT_FOUND));
         if(areaModel.getName() != null && !areaModel.getName().equals(areaModel1.getName())) {
             validateExistsByName(areaModel.getName());
             areaModel1.setName(areaModel.getName());
@@ -57,9 +58,9 @@ public class AreaUseCase implements IAreaService {
 
     @Override
     public AreaModel delete(Long id) {
-       AreaModel areaModel = areaPersistence.findOneWithSpeciesAndAnimals(id).orElseThrow(() -> new DataNotFoundException(Constants.AREA_NOT_FOUND));
+       AreaModel areaModel = this.findOne(id);
        for (SpecieModel specieModel: areaModel.getSpecies()) {
-            if(specieModel.getAnimals().size() > 0){
+            if(!specieModel.getAnimals().isEmpty()){
                 throw new DomainException(String.format(Constants.CANNOT_DELETE_AREA, areaModel.getName(), specieModel.getName()));
             }
        }
