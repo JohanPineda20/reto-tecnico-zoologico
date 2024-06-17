@@ -20,4 +20,6 @@ public interface IAreaPersistence {
     CustomPage<AreaModel> findAll(Integer page, Integer size);
 
     void delete(AreaModel areaModel);
+
+    Optional<AreaModel> findAnimalsByArea(Long id);
 }

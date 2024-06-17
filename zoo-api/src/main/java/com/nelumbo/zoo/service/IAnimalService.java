@@ -1,6 +1,8 @@
 package com.nelumbo.zoo.service;
 
+import com.nelumbo.zoo.dto.request.CreateCommentRequest;
 import com.nelumbo.zoo.model.AnimalModel;
+import com.nelumbo.zoo.model.CommentModel;
 import com.nelumbo.zoo.model.CustomPage;
 
 public interface IAnimalService {
@@ -15,4 +17,9 @@ public interface IAnimalService {
 
     AnimalModel delete(Long id);
 
+    CommentModel createComment(Long id, CommentModel commentModel);
+
+    void deleteComment(Long id, Long commentId);
+
+    CommentModel createReply(Long id, Long commentId, CommentModel commentModel);
 }

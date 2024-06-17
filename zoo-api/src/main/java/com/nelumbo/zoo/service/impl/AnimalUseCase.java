@@ -1,10 +1,12 @@
 package com.nelumbo.zoo.service.impl;
 
 import com.nelumbo.zoo.model.AnimalModel;
+import com.nelumbo.zoo.model.CommentModel;
 import com.nelumbo.zoo.model.CustomPage;
 import com.nelumbo.zoo.model.SpecieModel;
 import com.nelumbo.zoo.persistence.IAnimalPersistence;
 import com.nelumbo.zoo.service.IAnimalService;
+import com.nelumbo.zoo.service.ICommentService;
 import com.nelumbo.zoo.service.ISpecieService;
 import com.nelumbo.zoo.utils.Constants;
 import com.nelumbo.zoo.utils.exceptions.DataNotFoundException;
@@ -18,6 +20,7 @@ public class AnimalUseCase implements IAnimalService {
 
     private final IAnimalPersistence animalPersistence;
     private final ISpecieService specieService;
+    private final ICommentService commentService;
 
     @Override
     public CustomPage<AnimalModel> findAll(Integer page, Integer size) {
@@ -58,4 +61,21 @@ public class AnimalUseCase implements IAnimalService {
         return animalModel;
     }
 
+    @Override
+    public CommentModel createComment(Long id, CommentModel commentModel) {
+        AnimalModel animalModel = findOneWithSpecieAndArea(id);
+        return commentService.createComment(animalModel, commentModel);
+    }
+
+    @Override
+    public void deleteComment(Long id, Long commentId) {
+        AnimalModel animalModel = findOneWithSpecieAndArea(id);
+        commentService.deleteComment(animalModel.getId(), commentId);
+    }
+
+    @Override
+    public CommentModel createReply(Long id, Long commentId, CommentModel commentModel) {
+        AnimalModel animalModel = findOneWithSpecieAndArea(id);
+        return commentService.createReply(animalModel.getId(), commentId, commentModel);
+    }
 }

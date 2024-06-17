@@ -67,4 +67,9 @@ public class AreaUseCase implements IAreaService {
        areaPersistence.delete(areaModel);
        return areaModel;
     }
+
+    @Override
+    public AreaModel findAnimalsByArea(Long id) {
+        return areaPersistence.findAnimalsByArea(id).orElseThrow(() -> new DataNotFoundException(Constants.AREA_NOT_FOUND));
+    }
 }

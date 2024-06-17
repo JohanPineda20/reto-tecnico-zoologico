@@ -16,4 +16,6 @@ public interface IAreaService {
     AreaModel update(Long id, AreaModel areaModel);
 
     AreaModel delete(Long id);
+
+    AreaModel findAnimalsByArea(Long id);
 }

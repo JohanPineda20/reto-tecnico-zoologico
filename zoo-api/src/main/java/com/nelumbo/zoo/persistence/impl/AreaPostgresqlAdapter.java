@@ -50,4 +50,9 @@ public class AreaPostgresqlAdapter implements IAreaPersistence {
     public void delete(AreaModel areaModel) {
         areaRepository.delete(areaEntityMapper.toAreaEntity(areaModel));
     }
+
+    @Override
+    public Optional<AreaModel> findAnimalsByArea(Long id) {
+        return areaRepository.getAreaWithSpeciesAndAnimalsAndCommentsById(id).map(areaEntityMapper::areaProjectionWithSpeciesAndAnimalsAndCommentsToAreaModel);
+    }
 }

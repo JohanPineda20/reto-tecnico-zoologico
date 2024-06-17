@@ -68,4 +68,9 @@ public class AreaController {
         AreaResponse areaResponse = areaDtoMapper.toAreaResponse(areaService.delete(id));
         return ResponseEntity.ok(areaResponse);
     }
+    @PreAuthorize(Constants.ADMIN_OR_EMPLOYEE_ALLOWED)
+    @GetMapping("{id}/animals")
+    public ResponseEntity<AreaResponse> findAnimalsByArea(@PathVariable Long id) {
+        return ResponseEntity.ok(areaDtoMapper.toAreaResponse(areaService.findAnimalsByArea(id)));
+    }
 }

@@ -6,6 +6,7 @@ import com.nelumbo.zoo.persistence.projection.area.AreaProjection;
 import com.nelumbo.zoo.persistence.projection.area.AreaProjectionWithSpecies;
 import com.nelumbo.zoo.persistence.projection.area.AreaProjectionWithSpeciesAndAnimals;
 
+import com.nelumbo.zoo.persistence.projection.area.AreaProjectionWithSpeciesAndAnimalsAndComments;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
@@ -13,11 +14,10 @@ import org.mapstruct.ReportingPolicy;
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
         unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface AreaEntityMapper {
-
     AreaModel areaProjectionToAreaModel(AreaProjection areaProjection);
     AreaModel areaProjectionWithSpeciesToAreaModel(AreaProjectionWithSpecies areaProjectionWithSpecies);
     AreaModel areaProjectionWithSpeciesAndAnimalsToAreaModel(AreaProjectionWithSpeciesAndAnimals areaProjectionWithSpeciesAndAnimals);
-    
+    AreaModel areaProjectionWithSpeciesAndAnimalsAndCommentsToAreaModel(AreaProjectionWithSpeciesAndAnimalsAndComments areaProjectionWithSpeciesAndAnimalsAndComments);
     AreaModel toAreaModel(AreaEntity areaEntity);
     AreaEntity toAreaEntity(AreaModel areaModel);
 

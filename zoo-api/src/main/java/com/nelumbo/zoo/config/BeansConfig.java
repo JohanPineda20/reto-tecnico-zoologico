@@ -115,13 +115,16 @@ public class BeansConfig {
 
     @Bean
     public IAnimalService animalService(IAnimalPersistence animalPersistence,
-                                        ISpecieService specieService){
-        return new AnimalUseCase(animalPersistence, specieService);
+                                        ISpecieService specieService,
+                                        ICommentService commentService){
+        return new AnimalUseCase(animalPersistence, specieService, commentService);
     }
 
     @Bean
-    public ICommentService commentService(ICommentPersistence commentPersistence){
-        return new CommentUseCase(commentPersistence);
+    public ICommentService commentService(ICommentPersistence commentPersistence,
+                                          IAuthInformation authInformation,
+                                          IUserService userService){
+        return new CommentUseCase(commentPersistence, authInformation, userService);
     }
 
     @Bean
